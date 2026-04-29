@@ -1,7 +1,6 @@
-# Azure GitHub Actions Template
+# Azure Function with System Identity
 
-A production-ready template for deploying Azure infrastructure using GitHub
-Actions, Bicep, and Azure Deployment Stacks with OIDC authentication.
+An example of deploying an Azure Function with Bicep that uses System Identity to authenticate to the storage account.
 
 ## 🚀 Features
 

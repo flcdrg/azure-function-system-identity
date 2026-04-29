@@ -43,6 +43,33 @@ module storageModule 'modules/storage.bicep' = {
   }
 }
 
+module hostingPlanModule 'modules/plan.bicep' = {
+  name: 'hostingPlanModule'
+  params: {
+    hostingPlanName: 'plan-${variables.outputs.resourcePrefix}'
+    location: location
+  }
+}
+
+module functionAppModule 'modules/function.bicep' = {
+  name: 'functionAppModule'
+  params: {
+    functionAppName: 'func-${variables.outputs.resourcePrefix}'
+    location: location
+    hostingPlanId: hostingPlanModule.outputs.hostingPlanId
+    storageAccountName: storageModule.outputs.storageAccountName
+    // applicationInsightsName: 'appinsights-${variables.outputs.resourcePrefix}'
+  }
+}
+
+module storagePermissionsModule 'modules/storage-function-permissions.bicep' = {
+  name: 'storagePermissionsModule'
+  params: {
+    storageAccountName: storageModule.outputs.storageAccountName
+    functionAppIdentity: functionAppModule.outputs.functionAppIdentity
+  }
+}
+
 // Load outputs module
 module outputsModule 'outputs.bicep' = {
   name: 'outputsModule'
